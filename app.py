@@ -82,6 +82,8 @@ def update_output(value):
     width=900,
     height=600
     )
+    myheading1 = f"Wow! That's a lot of {value}!"
+
 
     return dcc.Graph(
         id='figure-1',
