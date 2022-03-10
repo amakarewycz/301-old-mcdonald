@@ -3,6 +3,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import plotly.graph_objs as go
 import pandas as pd
+from dash import Dash, Input, Output
 
 ########### Define your variables ######
 
@@ -19,6 +20,9 @@ mycolorbartitle = "Millions USD"
 tabtitle = 'Old McDonald'
 sourceurl = 'https://plot.ly/python/choropleth-maps/'
 githublink = 'https://github.com/austinlasseter/dash-map-usa-agriculture'
+
+
+
 
 
 ########## Set up the chart
@@ -51,6 +55,8 @@ app.title=tabtitle
 
 app.layout = html.Div(children=[
     html.H1(myheading1),
+    dcc.Dropdown(list_of_columns, 'dairy', id='demo-dropdown'),
+    html.Div(id='dd-output-container'),
     dcc.Graph(
         id='figure-1',
         figure=fig
@@ -60,6 +66,21 @@ app.layout = html.Div(children=[
     html.A("Data Source", href=sourceurl),
     ]
 )
+
+@app.callback(
+    Output('dd-output-container', 'children'),
+    Input('demo-dropdown', 'value')
+)
+def update_output(value):
+    fig.update_layout(
+        title_text = value,
+        geo_scope='usa',
+        width=1200,
+        height=800
+        )
+
+    return f'You have selected {value}'
+
 
 ############ Deploy
 if __name__ == '__main__':
