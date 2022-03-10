@@ -57,10 +57,6 @@ app.layout = html.Div(children=[
     html.H1(myheading1),
     dcc.Dropdown(produce_meat, mycolumn, id='demo-dropdown'),
     html.Div(id='dd-output-container'),
-    dcc.Graph(
-        id='figure-1',
-        figure=fig
-    ),
     html.A('Code on Github', href=githublink),
     html.Br(),
     html.A("Data Source", href=sourceurl),
@@ -79,7 +75,18 @@ def update_output(value):
         colorscale = mycolorscale,
         colorbar_title = mycolorbartitle,
     ))
-    return f'You have selected {value}'
+    
+    fig.update_layout(
+    title_text = mygraphtitle,
+    geo_scope='usa',
+    width=900,
+    height=600
+    )
+
+    return dcc.Graph(
+        id='figure-1',
+        figure=fig
+    )
 
 
 ############ Deploy
