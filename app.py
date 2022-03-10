@@ -54,7 +54,7 @@ app.title=tabtitle
 ########### Set up the layout
 
 app.layout = html.Div(children=[
-    html.H1(myheading1),
+    html.Div(id='dd-title'),
     dcc.Dropdown(produce_meat, mycolumn, id='demo-dropdown'),
     html.Div(id='dd-output-container'),
     html.A('Code on Github', href=githublink),
@@ -62,6 +62,17 @@ app.layout = html.Div(children=[
     html.A("Data Source", href=sourceurl),
     ]
 )
+
+@app.callback(
+    Output('dd-title', 'children'),
+    Input('demo-dropdown', 'value')
+)
+def update_title(value):
+    myheading1 = f"Say! That's a lot of {value}!"
+
+    return html.H1(myheading1)
+
+
 
 @app.callback(
     Output('dd-output-container', 'children'),
@@ -82,7 +93,6 @@ def update_output(value):
     width=900,
     height=600
     )
-    myheading1 = f"Wow! That's a lot of {value}!"
 
 
     return dcc.Graph(
